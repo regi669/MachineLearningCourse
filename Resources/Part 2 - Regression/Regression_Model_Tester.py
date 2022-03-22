@@ -18,7 +18,7 @@ def prepare_dataset(dataset_name):
     dataset = pd.read_csv(dataset_name)
     X = dataset.iloc[:, :-1].values
     y = dataset.iloc[:, -1].values
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     return X_train, X_test, y_train, y_test
 
 
@@ -54,14 +54,14 @@ def support_vector_regression(X_train, X_test, y_train, y_test):
 
 
 def decision_tree_regresion(X_train, X_test, y_train, y_test):
-    regressor = DecisionTreeRegressor(random_state=0)
+    regressor = DecisionTreeRegressor()
     regressor.fit(X_train, y_train)
     y_pred = regressor.predict(X_test)
     return r2_score(y_test, y_pred)
 
 
 def random_forest_regression(X_train, X_test, y_train, y_test):
-    regressor = RandomForestRegressor(n_estimators=10, random_state=0)
+    regressor = RandomForestRegressor(n_estimators=100)
     regressor.fit(X_train, y_train)
     y_pred = regressor.predict(X_test)
     return r2_score(y_test, y_pred)
