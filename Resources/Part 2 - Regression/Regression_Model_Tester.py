@@ -10,6 +10,7 @@ from sklearn.svm import SVR
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
+from xgboost import XGBRegressor
 
 dataset_name = 'Data.csv'
 
@@ -67,9 +68,17 @@ def random_forest_regression(X_train, X_test, y_train, y_test):
     return r2_score(y_test, y_pred)
 
 
+def xg_boost(X_train, X_test, y_train, y_test):
+    regressor = XGBRegressor()
+    regressor.fit(X_train, y_train)
+    y_pred = regressor.predict(X_test)
+    return r2_score(y_test, y_pred)
+
+
 X_train, X_test, y_train, y_test = prepare_dataset(dataset_name)
 print('Linear Regression R2 Score: {}'.format(linear_regression(X_train, X_test, y_train, y_test)))
 print('Polynomial Regression R2 Score: {}'.format(polynomial_regression(X_train, X_test, y_train, y_test)))
 print('Support Vector Regression R2 Score: {}'.format(support_vector_regression(X_train, X_test, y_train, y_test)))
 print('Decision Regression R2 Score: {}'.format(decision_tree_regresion(X_train, X_test, y_train, y_test)))
 print('Random Forest Regression R2 Score: {}'.format(random_forest_regression(X_train, X_test, y_train, y_test)))
+print('XG Boost Regression R2 Score: {}'.format(xg_boost(X_train, X_test, y_train, y_test)))
