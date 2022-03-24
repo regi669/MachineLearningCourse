@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
@@ -32,7 +32,10 @@ def logistic_regression(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std()*100
+    return accuracy, std
 
 
 def k_nearest_neighbors(X_train, X_test, y_train, y_test):
@@ -41,7 +44,10 @@ def k_nearest_neighbors(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
 
 
 def support_vector_machine_linear(X_train, X_test, y_train, y_test):
@@ -50,7 +56,10 @@ def support_vector_machine_linear(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
 
 
 def support_vector_machine_rbf(X_train, X_test, y_train, y_test):
@@ -59,7 +68,10 @@ def support_vector_machine_rbf(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
 
 
 def naive_bayes(X_train, X_test, y_train, y_test):
@@ -68,7 +80,10 @@ def naive_bayes(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
 
 
 def decision_tree(X_train, X_test, y_train, y_test):
@@ -77,7 +92,10 @@ def decision_tree(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
 
 
 def random_forest(X_train, X_test, y_train, y_test):
@@ -86,19 +104,22 @@ def random_forest(X_train, X_test, y_train, y_test):
     y_pred = classifier.predict(X_test)
     cm = confusion_matrix(y_test, y_pred)
     acc_score = accuracy_score(y_test, y_pred)
-    return cm, acc_score
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
 
 
 X_train, X_test, y_train, y_test = prepare_dataset(dataset_name)
 
 
-print('Logistic Regression Classification Score: {}'.format(logistic_regression(X_train, X_test, y_train, y_test)))
-print('K Nearest Neighbors Classification Score: {}'.format(k_nearest_neighbors(X_train, X_test, y_train, y_test)))
-print('SVM Linear Classification Score: {}'.format(support_vector_machine_linear(X_train, X_test, y_train, y_test)))
-print('SVM RBF Classification Score: {}'.format(support_vector_machine_rbf(X_train, X_test, y_train, y_test)))
-print('Naive Bayes Classification Score: {}'.format(naive_bayes(X_train, X_test, y_train, y_test)))
-print('Decision Tree Classification Score: {}'.format(decision_tree(X_train, X_test, y_train, y_test)))
-print('Random Forest Classification Score: {}'.format(random_forest(X_train, X_test, y_train, y_test)))
+print('Logistic Regression Classification Score: {} %'.format(logistic_regression(X_train, X_test, y_train, y_test)))
+print('K Nearest Neighbors Classification Score: {} %'.format(k_nearest_neighbors(X_train, X_test, y_train, y_test)))
+print('SVM Linear Classification Score: {} %'.format(support_vector_machine_linear(X_train, X_test, y_train, y_test)))
+print('SVM RBF Classification Score: {} %'.format(support_vector_machine_rbf(X_train, X_test, y_train, y_test)))
+print('Naive Bayes Classification Score: {} %'.format(naive_bayes(X_train, X_test, y_train, y_test)))
+print('Decision Tree Classification Score: {} %'.format(decision_tree(X_train, X_test, y_train, y_test)))
+print('Random Forest Classification Score: {} %'.format(random_forest(X_train, X_test, y_train, y_test)))
 
 
 
