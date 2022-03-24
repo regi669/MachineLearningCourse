@@ -11,6 +11,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, accuracy_score
+from xgboost import XGBClassifier
 
 dataset_name = 'Data.csv'
 
@@ -110,6 +111,18 @@ def random_forest(X_train, X_test, y_train, y_test):
     return accuracy, std
 
 
+def xg_boost(X_train, X_test, y_train, y_test):
+    classifier = XGBClassifier()
+    classifier.fit(X_train, y_train)
+    y_pred = classifier.predict(X_test)
+    cm = confusion_matrix(y_test, y_pred)
+    acc_score = accuracy_score(y_test, y_pred)
+    acc_list = cross_val_score(estimator=classifier, X=X_train, y=y_train, cv=10)
+    accuracy = acc_list.mean() * 100
+    std = acc_list.std() * 100
+    return accuracy, std
+
+
 X_train, X_test, y_train, y_test = prepare_dataset(dataset_name)
 
 
@@ -120,6 +133,7 @@ print('SVM RBF Classification Score: {} %'.format(support_vector_machine_rbf(X_t
 print('Naive Bayes Classification Score: {} %'.format(naive_bayes(X_train, X_test, y_train, y_test)))
 print('Decision Tree Classification Score: {} %'.format(decision_tree(X_train, X_test, y_train, y_test)))
 print('Random Forest Classification Score: {} %'.format(random_forest(X_train, X_test, y_train, y_test)))
+print('XG Boost Score: {} %'.format(xg_boost(X_train, X_test, y_train, y_test)))
 
 
 
