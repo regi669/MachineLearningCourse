@@ -39,3 +39,4 @@ def k_means(x, k):
 
 labels = k_means(X, 2)
 print(labels)
+
